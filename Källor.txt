@@ -1,1 +1,24 @@
+Gameplay: 
+https://sky-force-reloaded-2016.fandom.com/wiki/Game_Play
+
+
+https://www.youtube.com/watch?v=NEvdyefORBo
 https://www.youtube.com/watch?v=4FSeuQ7UjrM
+https://www.youtube.com/watch?v=C09u4WoEufc&list=PLX2vGYjWbI0ROSj_B0_eir_VkHrEkd4pi&index=2
+https://www.youtube.com/watch?v=AD4JIXQDw0s
+Programming a BETTER state machine: https://www.youtube.com/watch?v=qsIiFsddGV4
+
+Visual scripting:
+Developing transitions using state graphs: https://docs.unity3d.com/Packages/com.unity.visualscripting@1.5/manual/vs-state.html
+Changing states with transitions: https://docs.unity3d.com/Packages/com.unity.visualscripting@1.5/manual/vs-transitions.html
+
+
+
+TODO:
+
+Prop planes
+Jet Fighters
+Boss
+Projectiles
+Player
+Score
