@@ -15,6 +15,14 @@ public class Path : MonoBehaviour {
     
     //TODO: GetNextCheckpoint()
 
+    public Vector3 GetCheckpoint(int index) {
+        return Checkpoints[index].position;
+    }
+
+    public Vector3 GetFirstCheckpoint() {
+        return GetCheckpoint(0);
+    }
+
     public void OnDrawGizmos() {
         if (Checkpoints.Count == 0) return;
         

@@ -4,22 +4,23 @@ using System.Collections.Generic;
 using System.Transactions;
 using UnityEngine;
 
-public abstract class StateMachine: MonoBehaviour {
-    protected BaseState[] States;
+public abstract class StateMachine1<EState> : MonoBehaviour where EState : Enum {
+    protected Dictionary<EState, BaseState1<EState>> States = new Dictionary<EState, BaseState1<EState>>();
 
-    protected BaseState CurrentState;
-    protected BaseState NextState;
+    protected BaseState1<EState> CurrentState;
 
     void Start() {
         CurrentState.EnterState();
     }
 
     void Update() {
-        if (NextState.Equals(CurrentState)) {
+        EState nextStateKey = CurrentState.GetNextState();
+
+        if (nextStateKey.Equals(CurrentState.StateKey)) {
             CurrentState.UpdateState();
         }
         else {
-            TransitionToState(NextState);
+            TransitionToState(nextStateKey);
         }
     }
 
@@ -36,9 +37,9 @@ public abstract class StateMachine: MonoBehaviour {
         CurrentState.OnTriggerExit2D(col);
     }
 
-    private void TransitionToState(BaseState state) {
+    private void TransitionToState(EState stateKey) {
         CurrentState.ExitState();
-        CurrentState = state;
+        CurrentState = States[stateKey];
         CurrentState.EnterState();
     }
 }
