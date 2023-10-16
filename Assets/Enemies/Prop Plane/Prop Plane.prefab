@@ -52,6 +52,7 @@ MonoBehaviour:
   FlyState:
     speed: 2
     target: {x: 0, y: 0}
+  Health: 1
   Body: {fileID: 1822903306004866819}
   Path: {fileID: 0}
 --- !u!212 &356064754785112222

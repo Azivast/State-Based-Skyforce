@@ -5,14 +5,15 @@ using System.Xml.XPath;
 using UnityEngine;
 
 [Serializable]
-public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates> {
+public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates>, IDamageable {
     
-    [SerializeField] private float speed;
+    [SerializeField] private float speed = 3;
+    [SerializeField] private int ramDamage = 1;
     
     private PropPlaneBehaviour behaviour;
     private Path path;
     private int targetCheckpointIndex;
-    [SerializeField]private Vector2 target;
+    [SerializeField] private Vector2 target;
     private float TARGETMARGIN = 0.5f;
     
     public PropPlaneFlyState(PropPlaneBehaviour.AvailableStates key) : base(key) { }
@@ -45,8 +46,21 @@ public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates> {
         behaviour.Body.velocity = ((Vector3)target - behaviour.transform.position).normalized * speed;
     }
 
-    public override PropPlaneBehaviour.AvailableStates GetNextState() {
-        throw new NotImplementedException();
+    public override PropPlaneBehaviour.AvailableStates GetNextState() { // TODO: Cleaner implementation
+        if (behaviour.Health <= 0) {
+            return PropPlaneBehaviour.AvailableStates.Die;
+        }
+        else if ((path.GetLastCheckpoint() - behaviour.transform.position).magnitude <= TARGETMARGIN) {
+            return PropPlaneBehaviour.AvailableStates.Despawn;
+        }
+        else return PropPlaneBehaviour.AvailableStates.Fly;
+    }
+
+    public override void OnTriggerEnter2D(Collider2D col) {
+        if (col.TryGetComponent(out IDamageable damageable)) {
+            damageable.Damage(ramDamage);
+            behaviour.Health = 0;
+        }
     }
 
     private void NextTarget() {
@@ -54,5 +68,9 @@ public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates> {
         if (targetCheckpointIndex < path.Checkpoints.Count) {
             target = path.GetCheckpoint(targetCheckpointIndex);
         }
+    }
+    
+    public void Damage(int amount) {
+        behaviour.Health = Math.Max(behaviour.Health - amount, 0);
     }
 }

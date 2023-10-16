@@ -22,6 +22,9 @@ public class Path : MonoBehaviour {
     public Vector3 GetFirstCheckpoint() {
         return GetCheckpoint(0);
     }
+    public Vector3 GetLastCheckpoint() {
+        return GetCheckpoint(Checkpoints.Count-1);
+    }
 
     public void OnDrawGizmos() {
         if (Checkpoints.Count == 0) return;
