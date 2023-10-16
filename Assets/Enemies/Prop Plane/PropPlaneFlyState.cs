@@ -5,7 +5,7 @@ using System.Xml.XPath;
 using UnityEngine;
 
 [Serializable]
-public class PropPlaneFlyState : BaseState {
+public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates> {
     
     [SerializeField] private float speed;
     
@@ -14,6 +14,8 @@ public class PropPlaneFlyState : BaseState {
     private int targetCheckpointIndex;
     [SerializeField]private Vector2 target;
     private float TARGETMARGIN = 0.5f;
+    
+    public PropPlaneFlyState(PropPlaneBehaviour.AvailableStates key) : base(key) { }
 
     public void SetupState(PropPlaneBehaviour behaviour, Path path) {
         this.behaviour = behaviour;
@@ -41,6 +43,10 @@ public class PropPlaneFlyState : BaseState {
 
     public override void FixedUpdateState() {
         behaviour.Body.velocity = ((Vector3)target - behaviour.transform.position).normalized * speed;
+    }
+
+    public override PropPlaneBehaviour.AvailableStates GetNextState() {
+        throw new NotImplementedException();
     }
 
     private void NextTarget() {

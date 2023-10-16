@@ -5,17 +5,16 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PropPlaneBehaviour : MonoBehaviour {
-    [SerializeField] private PropPlaneFlyState FlyState = new PropPlaneFlyState();
+public class PropPlaneBehaviour : StateMachine<PropPlaneBehaviour.AvailableStates> {
+    [SerializeField] private PropPlaneFlyState FlyState = new PropPlaneFlyState(AvailableStates.Fly);
+    [SerializeField] private PropPlaneFlyState DespawnState = new PropPlaneFlyState(AvailableStates.Despawn)
+        ;
     
-    protected Dictionary<AvailableStates, BaseState> States = new Dictionary<AvailableStates, BaseState>();
     public enum AvailableStates {
         Fly,
+        Die,
+        Despawn,
     }
-    
-    private BaseState CurrentState;
-    public BaseState NextState;
-    
     
     [HideInInspector]public Rigidbody2D Body;
     [HideInInspector]public Path Path;
@@ -23,32 +22,10 @@ public class PropPlaneBehaviour : MonoBehaviour {
     private void Awake() {
         Body = GetComponent<Rigidbody2D>();
         States.Add(AvailableStates.Fly, FlyState);
+        States.Add(AvailableStates.Despawn, DespawnState);
     }
 
     private void Start() {
         FlyState.SetupState(this, Path);
-        
-        CurrentState = States[AvailableStates.Fly];
-        NextState = CurrentState;
-        
-        CurrentState.EnterState();
-    }
-
-    private void Update() {
-        if (NextState.Equals(CurrentState)) {
-            CurrentState.UpdateState();
-        }
-        else {
-            TransitionToState(NextState);
-        }
-    }
-    private void FixedUpdate() {
-        CurrentState.FixedUpdateState();
-    }
-
-    private void TransitionToState(BaseState state) {
-        CurrentState.ExitState();
-        CurrentState = state;
-        CurrentState.EnterState();
     }
 }
