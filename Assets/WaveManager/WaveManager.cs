@@ -5,30 +5,30 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour {
     [SerializeField] private WaveObject[] waves;
-    [SerializeField] private Path[] Paths;
-    [SerializeField] private float timeBetweenWaves = 5f;
+    [SerializeField] private Path[] paths;
+    [SerializeField] private float[] cooldownAfterWave;
 
-    private int currentWave = 0;
-    private bool spawningWave = false;
+    [SerializeField]private int currentWave = 0;
+    [SerializeField]private bool spawningWave = false;
 
     private void OnValidate() {
-        if (Paths.Length != waves.Length) {
+        if (paths.Length != waves.Length) {
             Debug.LogWarning("Number of Waves and Paths must be equal.");
         }
-        
+        if (paths.Length != waves.Length) {
+            Debug.LogWarning("Number of Waves and Paths must be equal.");
+        }
     }
 
     private IEnumerator SpawnWave(int index) {
-        currentWave++;
-        
         foreach (GameObject enemyPrefab in waves[index].Enemies) {
-            var path = Paths[index];
+            var path = paths[index];
             var enemy = Instantiate(enemyPrefab, path.GetFirstCheckpoint(), Quaternion.identity);
-            enemy.GetComponent<PropPlaneBehaviour>().Path = path; // TODO: Reduce coupling
+            enemy.GetComponent<IPathFollower>().Path = path; // TODO: Reduce coupling
             yield return new WaitForSeconds(waves[index].TimeBetweenEnemies);
         }
         
-        yield return new WaitForSeconds(timeBetweenWaves);
+        yield return new WaitForSeconds(cooldownAfterWave[index]);
         spawningWave = false;
     }
 

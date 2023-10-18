@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour {
     [SerializeField] private float speed = 10;
     [SerializeField] private GameObject healthObect;
+    [SerializeField] private PositionObject positionObject;
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform[] firingPositions;
     [SerializeField] private float fireRate = 1;
@@ -25,10 +26,13 @@ public class PlayerBehaviour : MonoBehaviour {
         if (Input.GetKey(KeyCode.Space) && fireRateTimer <= 0) {
             fireRateTimer = 1 / fireRate;
             foreach (var pos in firingPositions) {
-                Instantiate(projectile, pos.position, pos.rotation);
+                var bullet = Instantiate(projectile, pos.position, pos.rotation);
+                bullet.layer = LayerMask.NameToLayer("PlayerProjectiles");
             }
         }
 
         fireRateTimer -= Time.fixedDeltaTime;
+
+        positionObject.Position = transform.position;
     }
 }

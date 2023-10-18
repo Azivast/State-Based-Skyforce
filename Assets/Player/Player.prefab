@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 3573552804918541962}
   - component: {fileID: 5137302800974275386}
   - component: {fileID: 9094801514469623318}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  healthObect: {fileID: 0}
+  positionObject: {fileID: 11400000, guid: 7f9b490cb3a23ce43bae11ad64cda8ff, type: 2}
   projectile: {fileID: 4678140393062429496, guid: 49c70fa8ae79fc044b83465ff5b909e2, type: 3}
   firingPositions:
   - {fileID: 6724570110103315066}

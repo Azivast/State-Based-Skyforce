@@ -9,23 +9,22 @@ public class PropPlaneDieState : BaseState<PropPlaneBehaviour.AvailableStates> {
 
     [SerializeField] private GameObject ExplosionPrefab;
     [SerializeField] private GameObject ScorePrefab;
-    private PropPlaneBehaviour behaviour;
     
     public PropPlaneDieState(PropPlaneBehaviour.AvailableStates key) : base(key) { }
     
-    public void SetupState(PropPlaneBehaviour behaviour) {
-        this.behaviour = behaviour;
+    public void SetupState(PropPlaneBehaviour stateMachine) {
+        base.SetupState(stateMachine);
     }
 
     public override void EnterState() {
-        MonoBehaviour.Instantiate(ExplosionPrefab, behaviour.transform.position, behaviour.transform.rotation);
+        MonoBehaviour.Instantiate(ExplosionPrefab, stateMachine.transform.position, stateMachine.transform.rotation);
+        MonoBehaviour.Instantiate(ScorePrefab, stateMachine.transform.position, stateMachine.transform.rotation);
     }
 
     public override void ExitState() {
     }
-    
-    public override PropPlaneBehaviour.AvailableStates GetNextState() {
-        return PropPlaneBehaviour.AvailableStates.Despawn;
-    }
 
+    public override void UpdateState() { 
+        TransitionToState(PropPlaneBehaviour.AvailableStates.Despawn);
+    }
 }

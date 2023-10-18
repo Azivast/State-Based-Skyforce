@@ -5,27 +5,28 @@ using System.Xml.XPath;
 using UnityEngine;
 
 [Serializable]
-public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates>, IDamageable {
+public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates> {
     
     [SerializeField] private float speed = 3;
     [SerializeField] private int ramDamage = 1;
     
-    private PropPlaneBehaviour behaviour;
+    private PropPlaneBehaviour behaviour => (PropPlaneBehaviour)stateMachine;
     private Path path;
     private int targetCheckpointIndex;
     [SerializeField] private Vector2 target;
-    private float TARGETMARGIN = 0.5f;
-    
-    public PropPlaneFlyState(PropPlaneBehaviour.AvailableStates key) : base(key) { }
+    private const float TARGETMARGIN = 0.5f;
 
-    public void SetupState(PropPlaneBehaviour behaviour, Path path) {
-        this.behaviour = behaviour;
+    public PropPlaneFlyState(PropPlaneBehaviour.AvailableStates key) : base(key) { }
+    
+    public void SetupState(PropPlaneBehaviour stateMachine, Path path) {
+        base.SetupState(stateMachine);
         this.path = path;
+        targetCheckpointIndex = 1; //  Ship will be instantiated at checkpoint 0 so first target is 1
+        target = path.GetCheckpoint(targetCheckpointIndex);
     }
 
     public override void EnterState() {
-        targetCheckpointIndex = 1; //  Ship will be instantiated at checkpoint 0 so first target is 1
-        target = path.GetCheckpoint(targetCheckpointIndex);
+
     }
 
     public override void ExitState() {
@@ -46,20 +47,11 @@ public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates>, 
         behaviour.Body.velocity = ((Vector3)target - behaviour.transform.position).normalized * speed;
     }
 
-    public override PropPlaneBehaviour.AvailableStates GetNextState() { // TODO: Cleaner implementation
-        if (behaviour.Health <= 0) {
-            return PropPlaneBehaviour.AvailableStates.Die;
-        }
-        else if ((path.GetLastCheckpoint() - behaviour.transform.position).magnitude <= TARGETMARGIN) {
-            return PropPlaneBehaviour.AvailableStates.Despawn;
-        }
-        else return PropPlaneBehaviour.AvailableStates.Fly;
-    }
-
     public override void OnTriggerEnter2D(Collider2D col) {
         if (col.TryGetComponent(out IDamageable damageable)) {
             damageable.Damage(ramDamage);
             behaviour.Health = 0;
+            TransitionToState(PropPlaneBehaviour.AvailableStates.Die);
         }
     }
 
@@ -68,9 +60,8 @@ public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates>, 
         if (targetCheckpointIndex < path.Checkpoints.Count) {
             target = path.GetCheckpoint(targetCheckpointIndex);
         }
-    }
-    
-    public void Damage(int amount) {
-        behaviour.Health = Math.Max(behaviour.Health - amount, 0);
+        else {
+            TransitionToState(PropPlaneBehaviour.AvailableStates.Despawn);
+        }
     }
 }

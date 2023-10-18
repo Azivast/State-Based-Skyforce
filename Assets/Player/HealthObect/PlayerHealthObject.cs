@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "PlayerHealth", menuName = "PlayerHealthObject")]
 public class PlayerHealthObject : ScriptableObject
-{
+{ 
     public int MaxHealth = 3;
     public int CurrentHealth;
     public UnityAction<int, int> OnHealthChange = delegate{}; // <newHealth, maxHealth>

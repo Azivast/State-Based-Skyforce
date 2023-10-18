@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 356064754785112222}
   - component: {fileID: 1822903306004866819}
   - component: {fileID: 286897408561954465}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Prop Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,10 +51,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlyState:
     speed: 2
+    ramDamage: 1
     target: {x: 0, y: 0}
+  DieState:
+    ExplosionPrefab: {fileID: 2536247575748048894, guid: 8cdcbbdb9d74bd64f8f18810a5e49d0b, type: 3}
+    ScorePrefab: {fileID: 6620796296709907790, guid: d7a2fd0661bbc80468f4d7acebcbbd00, type: 3}
   Health: 1
   Body: {fileID: 1822903306004866819}
-  Path: {fileID: 0}
 --- !u!212 &356064754785112222
 SpriteRenderer:
   m_ObjectHideFlags: 0

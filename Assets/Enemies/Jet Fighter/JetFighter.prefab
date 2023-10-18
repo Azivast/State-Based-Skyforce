@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6370558314048127573}
   - component: {fileID: 356064754785112222}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: JetFighter
   m_TagString: Untagged
   m_Icon: {fileID: 0}

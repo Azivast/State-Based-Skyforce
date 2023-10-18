@@ -14,14 +14,7 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum {
     }
 
     void Update() {
-        EState nextStateKey = CurrentState.GetNextState();
-
-        if (nextStateKey.Equals(CurrentState.StateKey)) {
-            CurrentState.UpdateState();
-        }
-        else {
-            TransitionToState(nextStateKey);
-        }
+        CurrentState.UpdateState();
     }
     
     private void FixedUpdate() {
@@ -41,7 +34,7 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum {
         CurrentState.OnTriggerExit2D(col);
     }
 
-    private void TransitionToState(EState stateKey) {
+    public void TransitionToState(EState stateKey) {
         CurrentState.ExitState();
         CurrentState = States[stateKey];
         CurrentState.EnterState();

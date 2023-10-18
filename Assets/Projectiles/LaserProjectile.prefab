@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9d97308c44baa84ca32d669422d8af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  Speed: 6
+  Damage: 1
 --- !u!212 &8127878752601622075
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -113,5 +114,5 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.32, y: 0.44}
+  m_Size: {x: 0.12, y: 0.44}
   m_Direction: 0
