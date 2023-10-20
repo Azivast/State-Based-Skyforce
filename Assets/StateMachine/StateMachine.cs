@@ -21,17 +21,17 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum {
         CurrentState.FixedUpdateState();
     }
 
-    private void OnTriggerEnter2D(Collider2D col) {
-        CurrentState.OnTriggerEnter2D(col);
+    private void OnCollisionEnter2D(Collision2D other) {
+        CurrentState.OnCollisionEnter2D(other);
     }
 
-    private void OnTriggerStay2D(Collider2D col) {
-        CurrentState.OnTriggerStay2D(col);
+    private void OnCollisionStay2D(Collision2D other) {
+        CurrentState.OnCollisionStay2D(other);
         
     }
 
-    private void OnTriggerExit2D(Collider2D col) {
-        CurrentState.OnTriggerExit2D(col);
+    private void OnCollisionExit2D(Collision2D other) {
+        CurrentState.OnCollisionExit2D(other);
     }
 
     public void TransitionToState(EState stateKey) {

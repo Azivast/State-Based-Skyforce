@@ -9,17 +9,13 @@ public class PropPlaneBehaviour : StateMachine<PropPlaneBehaviour.AvailableState
     [SerializeField] private PropPlaneFlyState FlyState = new PropPlaneFlyState(AvailableStates.Fly);
     [SerializeField] private PropPlaneDieState DieState = new PropPlaneDieState(AvailableStates.Die);
     [SerializeField] private PropPlaneDespawnState DespawnState = new PropPlaneDespawnState(AvailableStates.Despawn);
-
     public int Health = 3;
-    
     public enum AvailableStates {
         Fly,
         Die,
         Despawn,
     }
-    
     public Path Path { get; set; }
-    
     [HideInInspector]public Rigidbody2D Body;
 
 

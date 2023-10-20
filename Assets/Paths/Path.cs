@@ -40,8 +40,7 @@ public class Path : MonoBehaviour {
         
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(transform.GetChild(0).position, 0.1f);
-        Gizmos.color = Color.white;
-        for (int i = 1; i < transform.childCount-1; i++) {
+        for (int i = 0; i < transform.childCount-1; i++) {
             Gizmos.DrawLine(transform.GetChild(i).position, transform.GetChild(i+1).position);
             Gizmos.DrawSphere(transform.GetChild(i).position, 0.1f);
         }

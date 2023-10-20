@@ -15,8 +15,8 @@ TagManager:
   - Enemies
   - PlayerProjectiles
   - EnemyProjectiles
-  - 
-  - 
+  - Pickups
+  - Barrier
   - 
   - 
   - 
@@ -40,4 +40,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackgroundIObjects
+    uniqueID: 2760968039
+    locked: 0
+  - name: ForegroundObjects
+    uniqueID: 3801053059
+    locked: 0
+  - name: UI
+    uniqueID: 399697189
     locked: 0

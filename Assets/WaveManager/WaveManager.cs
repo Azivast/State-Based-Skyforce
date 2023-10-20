@@ -23,8 +23,17 @@ public class WaveManager : MonoBehaviour {
     private IEnumerator SpawnWave(int index) {
         foreach (GameObject enemyPrefab in waves[index].Enemies) {
             var path = paths[index];
-            var enemy = Instantiate(enemyPrefab, path.GetFirstCheckpoint(), Quaternion.identity);
-            enemy.GetComponent<IPathFollower>().Path = path; // TODO: Reduce coupling
+
+            Quaternion rotation = path.Checkpoints.Count == 1
+                ? Quaternion.identity
+                : Quaternion.FromToRotation(Vector3.down,
+                    ((Vector3)path.GetCheckpoint(1) - path.GetFirstCheckpoint()).normalized);
+
+            var enemy = Instantiate(enemyPrefab, path.GetFirstCheckpoint(), rotation);
+            if (enemy.TryGetComponent<IPathFollower>(out var pathFollower)) {
+                pathFollower.Path = path;
+            }
+            
             yield return new WaitForSeconds(waves[index].TimeBetweenEnemies);
         }
         

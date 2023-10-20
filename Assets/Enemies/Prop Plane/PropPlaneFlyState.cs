@@ -8,7 +8,9 @@ using UnityEngine;
 public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates> {
     
     [SerializeField] private float speed = 3;
+    [SerializeField] private int rotationSpeed = 500;
     [SerializeField] private int ramDamage = 1;
+
     
     private PropPlaneBehaviour behaviour => (PropPlaneBehaviour)stateMachine;
     private Path path;
@@ -40,15 +42,23 @@ public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates> {
         }
         
         Vector2 direction = ((Vector3)target - behaviour.transform.position).normalized;
-        behaviour.transform.rotation = Quaternion.FromToRotation(Vector3.down, direction);
+        Quaternion rotationTarget = Quaternion.FromToRotation(Vector3.down, direction);
+        if (behaviour.transform.rotation != rotationTarget) {
+            behaviour.transform.rotation = Quaternion.Slerp(behaviour.transform.rotation, rotationTarget,
+                rotationSpeed * Time.deltaTime);
+        }
+
     }
 
     public override void FixedUpdateState() {
-        behaviour.Body.velocity = ((Vector3)target - behaviour.transform.position).normalized * speed;
+        //behaviour.Body.velocity = ((Vector3)target - behaviour.transform.position).normalized * speed;
+        behaviour.Body.velocity = -behaviour.transform.up * speed;
     }
 
-    public override void OnTriggerEnter2D(Collider2D col) {
-        if (col.TryGetComponent(out IDamageable damageable)) {
+    public override void OnCollisionEnter2D(Collision2D other) {
+        if (other.collider.gameObject.layer == LayerMask.NameToLayer("Enemies")) return;
+        
+        if (other.collider.TryGetComponent(out IDamageable damageable)) {
             damageable.Damage(ramDamage);
             behaviour.Health = 0;
             TransitionToState(PropPlaneBehaviour.AvailableStates.Die);

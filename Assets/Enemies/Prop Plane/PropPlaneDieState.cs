@@ -18,7 +18,7 @@ public class PropPlaneDieState : BaseState<PropPlaneBehaviour.AvailableStates> {
 
     public override void EnterState() {
         MonoBehaviour.Instantiate(ExplosionPrefab, stateMachine.transform.position, stateMachine.transform.rotation);
-        MonoBehaviour.Instantiate(ScorePrefab, stateMachine.transform.position, stateMachine.transform.rotation);
+        MonoBehaviour.Instantiate(ScorePrefab, stateMachine.transform.position, Quaternion.identity);
     }
 
     public override void ExitState() {

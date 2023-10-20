@@ -47,8 +47,10 @@ public class HeliFlyState : BaseState<HeliBehaviour.AvailableStates> {
         behaviour.Body.velocity = ((Vector3)target - behaviour.transform.position).normalized * speed;
     }
 
-    public override void OnTriggerEnter2D(Collider2D col) {
-        if (col.TryGetComponent(out IDamageable damageable)) {
+    public override void OnCollisionEnter2D(Collision2D other) {
+        if (other.collider.gameObject.layer == LayerMask.NameToLayer("Enemies")) return;
+        
+        if (other.collider.TryGetComponent(out IDamageable damageable)) {
             damageable.Damage(ramDamage);
             behaviour.Health = 0;
             TransitionToState(HeliBehaviour.AvailableStates.Die);

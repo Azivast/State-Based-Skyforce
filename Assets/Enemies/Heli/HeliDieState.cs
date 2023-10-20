@@ -20,7 +20,7 @@ public class  HeliDieState : BaseState< HeliBehaviour.AvailableStates> {
 
     public override void EnterState() {
         MonoBehaviour.Instantiate(ExplosionPrefab, behaviour.transform.position, behaviour.transform.rotation);
-        MonoBehaviour.Instantiate(ScorePrefab, behaviour.transform.position, behaviour.transform.rotation);
+        MonoBehaviour.Instantiate(ScorePrefab, behaviour.transform.position, Quaternion.identity);
     }
 
     public override void ExitState() {

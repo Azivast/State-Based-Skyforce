@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerBehaviour : MonoBehaviour {
+public class PlayerBehaviour : MonoBehaviour, IDamageable {
     [SerializeField] private float speed = 10;
-    [SerializeField] private GameObject healthObect;
+    [SerializeField] private PlayerHealthObject healthObect;
     [SerializeField] private PositionObject positionObject;
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform[] firingPositions;
-    [SerializeField] private float fireRate = 1;
+    [SerializeField] private WeaponStatsObject weaponStats;
     private float fireRateTimer;
     private Rigidbody2D rb;
 
@@ -24,7 +24,7 @@ public class PlayerBehaviour : MonoBehaviour {
         rb.velocity = new Vector2(velocityX, velocityY);
 
         if (Input.GetKey(KeyCode.Space) && fireRateTimer <= 0) {
-            fireRateTimer = 1 / fireRate;
+            fireRateTimer = 1 / weaponStats.FireRate;
             foreach (var pos in firingPositions) {
                 var bullet = Instantiate(projectile, pos.position, pos.rotation);
                 bullet.layer = LayerMask.NameToLayer("PlayerProjectiles");
@@ -34,5 +34,9 @@ public class PlayerBehaviour : MonoBehaviour {
         fireRateTimer -= Time.fixedDeltaTime;
 
         positionObject.Position = transform.position;
+    }
+
+    public void Damage(int amount) {
+        healthObect.Damage(amount);
     }
 }
