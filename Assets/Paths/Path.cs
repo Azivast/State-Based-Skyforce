@@ -1,17 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Path : MonoBehaviour {
     public List<Transform> Checkpoints =  new List<Transform>();
-
-    // private void Start() {
-    //     for (int i = 0; i < transform.childCount-1; i++) {
-    //         Checkpoints.Add(transform.GetChild(i));
-    //     }
-    // }
     
     //TODO: GetNextCheckpoint()
 
@@ -30,8 +23,8 @@ public class Path : MonoBehaviour {
         if (Checkpoints.Count == 0) return;
         
         Gizmos.color = Color.white;
-        for (int i = 0; i < transform.childCount-1; i++) {
-            Gizmos.DrawLine(transform.GetChild(i).position, transform.GetChild(i+1).position);
+        for (int i = 0; i < Checkpoints.Count-1; i++) {
+            Gizmos.DrawLine(Checkpoints[i].position, Checkpoints[i+1].position);
         }
     }
 

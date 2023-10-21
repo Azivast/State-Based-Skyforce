@@ -2,27 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class WaveManager : MonoBehaviour {
-    [SerializeField] private WaveObject[] waves;
-    [SerializeField] private Path[] paths;
-    [SerializeField] private float[] cooldownAfterWave;
+public class WaveManager : MonoBehaviour { 
+    [SerializeField] private Wave[] waves;
 
     [SerializeField]private int currentWave = 0;
     [SerializeField]private bool spawningWave = false;
 
-    private void OnValidate() {
-        if (paths.Length != waves.Length) {
-            Debug.LogWarning("Number of Waves and Paths must be equal.");
-        }
-        if (paths.Length != waves.Length) {
-            Debug.LogWarning("Number of Waves and Paths must be equal.");
-        }
-    }
-
     private IEnumerator SpawnWave(int index) {
-        foreach (GameObject enemyPrefab in waves[index].Enemies) {
-            var path = paths[index];
+        foreach (GameObject enemyPrefab in waves[index].wave.Enemies) {
+            var path = waves[index].path;
 
             Quaternion rotation = path.Checkpoints.Count == 1
                 ? Quaternion.identity
@@ -34,10 +24,10 @@ public class WaveManager : MonoBehaviour {
                 pathFollower.Path = path;
             }
             
-            yield return new WaitForSeconds(waves[index].TimeBetweenEnemies);
+            yield return new WaitForSeconds(waves[index].wave.TimeBetweenEnemies);
         }
         
-        yield return new WaitForSeconds(cooldownAfterWave[index]);
+        yield return new WaitForSeconds(waves[index].cooldownAfterWave);
         spawningWave = false;
     }
 
@@ -51,5 +41,12 @@ public class WaveManager : MonoBehaviour {
         if (currentWave >= waves.Length) return;
 
         if (spawningWave == false) NextWave();
+    }
+    
+    [Serializable]
+    private struct Wave {
+        public WaveObject wave;
+        public Path path;
+        public float cooldownAfterWave;
     }
 }

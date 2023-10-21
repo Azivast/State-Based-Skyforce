@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  healthObect: {fileID: 0}
+  healthObect: {fileID: 11400000, guid: 1a9a0a7363a05dc408b4d2ef0d771895, type: 2}
   positionObject: {fileID: 11400000, guid: 7f9b490cb3a23ce43bae11ad64cda8ff, type: 2}
   projectile: {fileID: 4678140393062429496, guid: 49c70fa8ae79fc044b83465ff5b909e2, type: 3}
   firingPositions:
