@@ -7,7 +7,13 @@ using UnityEngine;
 public class ProjectileBehaviour : MonoBehaviour
 {
     [SerializeField] private int Speed = 3;
+    [SerializeField] private float spread = 0;
     public int Damage = 1;
+
+    private void Start() {
+
+        transform.Rotate(Vector3.forward, UnityEngine.Random.Range(-spread, spread));
+    }
 
     private void FixedUpdate() {
         transform.position += transform.up * (Speed * Time.fixedDeltaTime);

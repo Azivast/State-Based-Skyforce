@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 public class WaveManager : MonoBehaviour { 
@@ -9,6 +10,8 @@ public class WaveManager : MonoBehaviour {
 
     [SerializeField]private int currentWave = 0;
     [SerializeField]private bool spawningWave = false;
+
+    public UnityAction OnAllWavesSpawned = delegate { };
 
     private IEnumerator SpawnWave(int index) {
         foreach (GameObject enemyPrefab in waves[index].wave.Enemies) {
@@ -35,6 +38,7 @@ public class WaveManager : MonoBehaviour {
         spawningWave = true;
         StartCoroutine(SpawnWave(currentWave));
         currentWave++;
+        if (currentWave >= waves.Length) OnAllWavesSpawned.Invoke();
     }
 
     private void Update() { //TODO: fixed update?

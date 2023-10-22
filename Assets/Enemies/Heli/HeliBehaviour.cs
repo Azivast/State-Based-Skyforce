@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class HeliBehaviour : StateMachine<HeliBehaviour.AvailableStates>, IDamageable, IPathFollower {
@@ -10,6 +11,7 @@ public class HeliBehaviour : StateMachine<HeliBehaviour.AvailableStates>, IDamag
     [SerializeField] private  HeliShootState ShootState = new  HeliShootState(AvailableStates.Shoot);
     [SerializeField] private  HeliDieState DieState = new  HeliDieState(AvailableStates.Die);
     [SerializeField] private  HeliDespawnState DespawnState = new  HeliDespawnState(AvailableStates.Despawn);
+    [SerializeField] private UnityEvent OnHit;
 
     public int Health = 3;
     
@@ -43,6 +45,7 @@ public class HeliBehaviour : StateMachine<HeliBehaviour.AvailableStates>, IDamag
 
     public void Damage(int amount) {
         Health = Math.Max(Health - amount, 0);
+        OnHit.Invoke();
         
         if (Health <= 0) {
             TransitionToState(AvailableStates.Die);

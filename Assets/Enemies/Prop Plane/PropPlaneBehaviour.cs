@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PropPlaneBehaviour : StateMachine<PropPlaneBehaviour.AvailableStates>, IDamageable, IPathFollower {
     [SerializeField] private PropPlaneFlyState FlyState = new PropPlaneFlyState(AvailableStates.Fly);
     [SerializeField] private PropPlaneDieState DieState = new PropPlaneDieState(AvailableStates.Die);
     [SerializeField] private PropPlaneDespawnState DespawnState = new PropPlaneDespawnState(AvailableStates.Despawn);
+    [SerializeField] private UnityEvent OnHit;
     public int Health = 3;
     public enum AvailableStates {
         Fly,
@@ -36,6 +38,7 @@ public class PropPlaneBehaviour : StateMachine<PropPlaneBehaviour.AvailableState
 
     public void Damage(int amount) {
         Health = Math.Max(Health - amount, 0);
+        OnHit.Invoke();
         
         if (Health <= 0) {
             TransitionToState(AvailableStates.Die);

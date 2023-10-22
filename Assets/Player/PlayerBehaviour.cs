@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerBehaviour : MonoBehaviour, IDamageable {
@@ -11,11 +13,21 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable {
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform[] firingPositions;
     [SerializeField] private WeaponStatsObject weaponStats;
+    [SerializeField] private UnityEvent OnHit;
+    [SerializeField] private GameObject ExplosionPrefab;
     private float fireRateTimer;
     private Rigidbody2D rb;
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void OnEnable() {
+        healthObect.OnPlayerDied += OnDeath;
+    }
+
+    private void OnDisable() {
+        healthObect.OnPlayerDied -= OnDeath;
     }
 
     public void FixedUpdate(){
@@ -38,5 +50,11 @@ public class PlayerBehaviour : MonoBehaviour, IDamageable {
 
     public void Damage(int amount) {
         healthObect.Damage(amount);
+        OnHit.Invoke();
+    }
+
+    private void OnDeath() {
+        Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }

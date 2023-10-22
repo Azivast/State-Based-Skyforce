@@ -7,7 +7,6 @@ using UnityEngine;
 public class DeathBarrier : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log($"{other} hit death barrier.");
         Destroy(other.gameObject);
     }
 }

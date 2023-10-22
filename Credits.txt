@@ -14,18 +14,15 @@ Visual scripting:
 Developing transitions using state graphs: https://docs.unity3d.com/Packages/com.unity.visualscripting@1.5/manual/vs-state.html
 Changing states with transitions: https://docs.unity3d.com/Packages/com.unity.visualscripting@1.5/manual/vs-transitions.html
 
+Sfx (cc0):
+https://freesound.org/people/Exoticgaming/sounds/676638/
+https://freesound.org/people/ajanhallinta/sounds/650701/
+https://freesound.org/people/davidou/sounds/88467/
+https://freesound.org/people/Nbs%20Dark/sounds/94185/
+https://freesound.org/people/plasterbrain/sounds/464902/
 
 
-TODO:
-
-Prop planes
-Jet Fighters
-Boss
-Projectiles
-Player
-Score
-
-
+Font: https://opengameart.org/content/kenney-fonts
 
 
 Some points I'd make on State Machine design, since I'm quite passionate about those:

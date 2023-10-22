@@ -41,7 +41,7 @@ public class ShipShootState : BaseState<ShipBehaviour.AvailableStates> {
         
         // Shooting
         if (shotsFired >= numberOfShots) {
-            TransitionToState(ShipBehaviour.AvailableStates.Fly);
+            TransitionToState(ShipBehaviour.AvailableStates.Move);
         }
         
         if ((timeSinceStart += Time.deltaTime) < timeBeforeFirstShot) return;

@@ -7,6 +7,7 @@ using UnityEngine;
 public class ScoreCounter : MonoBehaviour {
    [SerializeField] private ScoreObject score;
    [SerializeField] private TMP_Text text;
+   [SerializeField] private string PREFIX = "";
    private const string FORMAT = "00000000";
 
    private void OnEnable() {
@@ -19,6 +20,6 @@ public class ScoreCounter : MonoBehaviour {
    }
 
    private void OnScoreChange(int newScore) {
-      text.text = newScore.ToString(FORMAT);
+      text.text = PREFIX + newScore.ToString(FORMAT);
    }
 }

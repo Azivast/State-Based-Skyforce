@@ -12,7 +12,7 @@ public class ShipMoveState : BaseState<ShipBehaviour.AvailableStates> {
     [SerializeField] private WorldMovementObject movement;
     
     [SerializeField] private float timeBetweenShootState = 4f;
-    private float timer;
+    private float timer = 0;
     
     private ShipBehaviour behaviour => (ShipBehaviour)stateMachine;
     
