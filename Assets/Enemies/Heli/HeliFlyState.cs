@@ -8,6 +8,7 @@ using UnityEngine;
 public class HeliFlyState : BaseState<HeliBehaviour.AvailableStates> {
     
     [SerializeField] private float speed = 3;
+    [SerializeField] private int rotationSpeed = 2;
     [SerializeField] private int ramDamage = 1;
     
     private HeliBehaviour behaviour => (HeliBehaviour)stateMachine;
@@ -39,13 +40,16 @@ public class HeliFlyState : BaseState<HeliBehaviour.AvailableStates> {
             NextTarget();
         }
         
-        Vector2 direction = ((Vector3)target - behaviour.transform.position).normalized;
-        behaviour.transform.rotation = Quaternion.FromToRotation(Vector3.down, direction);
+        Vector2 current = -behaviour.transform.up;
+        Vector2 to = (Vector3)target - behaviour.transform.position;
+        behaviour.transform.up = -Vector3.RotateTowards(current, to, rotationSpeed * Time.deltaTime, 0f);
+
     }
 
     public override void FixedUpdateState() {
-        behaviour.Body.velocity = ((Vector3)target - behaviour.transform.position).normalized * speed;
+        behaviour.Body.velocity = -behaviour.transform.up * speed;
     }
+
 
     public override void OnCollisionEnter2D(Collision2D other) {
         if (other.collider.gameObject.layer == LayerMask.NameToLayer("Enemies")) return;

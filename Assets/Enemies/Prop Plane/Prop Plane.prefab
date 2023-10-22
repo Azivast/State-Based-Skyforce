@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlyState:
     speed: 2
-    rotationSpeed: 1
+    rotationSpeed: 2
     ramDamage: 1
     target: {x: 0, y: 0}
   DieState:

@@ -8,7 +8,7 @@ using UnityEngine;
 public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates> {
     
     [SerializeField] private float speed = 3;
-    [SerializeField] private int rotationSpeed = 500;
+    [SerializeField] private int rotationSpeed = 2;
     [SerializeField] private int ramDamage = 1;
 
     
@@ -41,17 +41,13 @@ public class PropPlaneFlyState : BaseState<PropPlaneBehaviour.AvailableStates> {
             NextTarget();
         }
         
-        Vector2 direction = ((Vector3)target - behaviour.transform.position).normalized;
-        Quaternion rotationTarget = Quaternion.FromToRotation(Vector3.down, direction);
-        if (behaviour.transform.rotation != rotationTarget) {
-            behaviour.transform.rotation = Quaternion.Slerp(behaviour.transform.rotation, rotationTarget,
-                rotationSpeed * Time.deltaTime);
-        }
+        Vector2 current = -behaviour.transform.up;
+        Vector2 to = (Vector3)target - behaviour.transform.position;
+        behaviour.transform.up = -Vector3.RotateTowards(current, to, rotationSpeed * Time.deltaTime, 0f);
 
     }
 
     public override void FixedUpdateState() {
-        //behaviour.Body.velocity = ((Vector3)target - behaviour.transform.position).normalized * speed;
         behaviour.Body.velocity = -behaviour.transform.up * speed;
     }
 

@@ -8,10 +8,13 @@ using UnityEngine;
 public class  ShipDieState : BaseState< ShipBehaviour.AvailableStates> {
 
     [SerializeField] private GameObject ExplosionPrefab;
+    [SerializeField] private GameObject SmokePrefab;
     [SerializeField] private GameObject ScorePrefab;
-    private  ShipBehaviour behaviour;
+    [SerializeField] private Sprite destroyedSprite;
+    [SerializeField] private SpriteRenderer renderer;
+    private ShipBehaviour behaviour;
     
-    public  ShipDieState(ShipBehaviour.AvailableStates key) : base(key) { }
+    public ShipDieState(ShipBehaviour.AvailableStates key) : base(key) { }
     
     public void SetupState(ShipBehaviour stateMachine) {
         base.SetupState(stateMachine);
@@ -21,13 +24,10 @@ public class  ShipDieState : BaseState< ShipBehaviour.AvailableStates> {
     public override void EnterState() {
         MonoBehaviour.Instantiate(ExplosionPrefab, behaviour.transform.position, behaviour.transform.rotation);
         MonoBehaviour.Instantiate(ScorePrefab, behaviour.transform.position, Quaternion.identity);
+        SmokePrefab.SetActive(true);
+        renderer.sprite = destroyedSprite;
     }
 
     public override void ExitState() {
     }
-    
-    public override void UpdateState() { 
-        TransitionToState(ShipBehaviour.AvailableStates.Despawn);
-    }
-
 }

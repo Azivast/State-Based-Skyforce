@@ -9,6 +9,7 @@ https://www.youtube.com/watch?v=C09u4WoEufc&list=PLX2vGYjWbI0ROSj_B0_eir_VkHrEkd
 https://www.youtube.com/watch?v=AD4JIXQDw0s
 Programming a BETTER state machine: https://www.youtube.com/watch?v=qsIiFsddGV4
 Exempelprojekt från föreläsninngen: !!LÄNK HÄR!!
+https://docs.unity3d.com/ScriptReference/Vector3.RotateTowards.html
 
 Visual scripting:
 Developing transitions using state graphs: https://docs.unity3d.com/Packages/com.unity.visualscripting@1.5/manual/vs-state.html
@@ -25,11 +26,4 @@ https://freesound.org/people/plasterbrain/sounds/464902/
 Font: https://opengameart.org/content/kenney-fonts
 
 
-Some points I'd make on State Machine design, since I'm quite passionate about those:
-- Avoid the term "Manager" unless the system is intended to be used once in a game scene. FSMs are very frequently used in character behaviour systems to control decisions, actions, animations, sounds and so on. Those are per-entity usages. Why not just call a spade a spade. It's the state machine that handles the states, regadless of whether it's one instance or a 100 instances in a scene. No better name than just "StateMachine" imo.
-- Use Message Passing. Anytime the current state or an external system wants to trigger a next state, store it in the SM in a private field instead of having the SM specifically asking the current state "hey do you have a next state for me?". Use a "private EState queuedState;" field instead.
-- There's high value in talking about the differences between a SM that internally decides when to switch states, or one that expects external systems to switch. Is there deliberate intention behind the transition method being public? This allows state transitions as a direct call from external systems, instead of handling that in the SMs own Update (see the previous point).
 - The dictionary approach severly restricts how State instances must be made. For one, they must be registered for every FSM when the FSM is initialized. Secondly, that also means they must be pre-defined which prevents dynamic adjustments to the state members. Thirdly, it expects a one-to-one mapping. This means a Walk vs Run state needs two separate enum values despite all the code behaviour being the exact same, only with the speed being the difference. Now imagine having a "slowedWalk", "boostedRun", "Sprint" and other variations. All of those could instead just be done during state construction, i.e.: "stateMachine.QueueNextState(new MoveState(moveSpeed))" where the moveSpeed could stay very dynamic throughout the game. There are other ways of passing movement speed but I think it serves as an example of flexible design.
-
-- Show an implementation of the initialization of these classes, in practical examples. How is the dictionary populated, how is the first state going to be set. Should the SM assume that there is such a thing as a "default" state. Should the SM allow having no state at all in some cases?
-- Flexibility in decision making. If a state needs to tell the SM what the next state is, it means that this state will act the same in most cases. Of course there can be some logic as to what state should be picked, but imagine using state for the character behaviour in an action game. If a state is to move to a location, how does the movement know what comes next? Should the character swing a sword or try open a door? A move state wouldn't know the answer without a lot of complexity that doesn't concern how movement is done (which contradicts SOLID principles). So if the movement completes, how should the next state be chosen. This ties into the use of a "default state" but also the thought about "external state decisions". This is also the biggest difference between a mere FSM and a fully fledged BehaviourTree. Although I would recommend a combination of the two.

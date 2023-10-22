@@ -45,6 +45,7 @@ public class ShipBehaviour : StateMachine<ShipBehaviour.AvailableStates>, IDamag
     }
 
     public void Damage(int amount) {
+        if (CurrentState == States[AvailableStates.Die]) return;
         Health = Math.Max(Health - amount, 0);
         OnHit.Invoke();
         
