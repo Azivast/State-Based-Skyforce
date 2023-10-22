@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Path : MonoBehaviour {
     public List<Transform> Checkpoints =  new List<Transform>();
-    
-    //TODO: GetNextCheckpoint()
 
     public Vector3 GetCheckpoint(int index) {
         return Checkpoints[index].position;

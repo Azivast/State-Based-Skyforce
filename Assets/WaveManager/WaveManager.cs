@@ -41,7 +41,7 @@ public class WaveManager : MonoBehaviour {
         if (currentWave >= waves.Length) OnAllWavesSpawned.Invoke();
     }
 
-    private void Update() { //TODO: fixed update?
+    private void Update() {
         if (currentWave >= waves.Length) return;
 
         if (spawningWave == false) NextWave();
