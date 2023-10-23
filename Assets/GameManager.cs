@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject looseGUI;
     [SerializeField] private GameObject playingGUI;
     [SerializeField] private string mainMenuSceneName;
-    [SerializeField] private float timeBeforeMainMenu = 7;
+    [SerializeField] private float timeBeforeMainMenuWin = 7;
+    [SerializeField] private float timeBeforeMainMenuLoose = 7;
     [SerializeField] private PlayerHealthObject playerHealth;
     [SerializeField] private WaveManager waveManager;
     private void OnEnable() {
@@ -25,21 +26,21 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnDisable() {
-        playerHealth.OnPlayerDied += Loose;
+        playerHealth.OnPlayerDied -= Loose;
         waveManager.OnAllWavesSpawned -= Win;
     }
 
     private void Win() {
         playingGUI.SetActive(false);
-        looseGUI.SetActive(true);
-        StartCoroutine(Wait(timeBeforeMainMenu));
+        winGUI.SetActive(true);
+        StartCoroutine(Wait(timeBeforeMainMenuWin));
 
     }
 
     private void Loose() {
         playingGUI.SetActive(false);
         looseGUI.SetActive(true);
-        StartCoroutine(Wait(timeBeforeMainMenu));
+        StartCoroutine(Wait(timeBeforeMainMenuLoose));
     }
     
     IEnumerator Wait(float seconds)

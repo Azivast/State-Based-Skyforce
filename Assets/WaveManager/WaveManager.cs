@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -12,6 +13,8 @@ public class WaveManager : MonoBehaviour {
     [SerializeField]private bool spawningWave = false;
 
     public UnityAction OnAllWavesSpawned = delegate { };
+
+    private List<GameObject> spawnedEnemies = new List<GameObject>();
 
     private IEnumerator SpawnWave(int index) {
         foreach (GameObject enemyPrefab in waves[index].wave.Enemies) {
@@ -27,6 +30,7 @@ public class WaveManager : MonoBehaviour {
                 pathFollower.Path = path;
             }
             
+            spawnedEnemies.Add(enemy);
             yield return new WaitForSeconds(waves[index].wave.TimeBetweenEnemies);
         }
         
@@ -35,10 +39,12 @@ public class WaveManager : MonoBehaviour {
     }
 
     private void NextWave() {
+        if (currentWave >= waves.Length && !spawnedEnemies.Any()) {
+            OnAllWavesSpawned.Invoke();
+        }
         spawningWave = true;
         StartCoroutine(SpawnWave(currentWave));
         currentWave++;
-        if (currentWave >= waves.Length) OnAllWavesSpawned.Invoke();
     }
 
     private void Update() {

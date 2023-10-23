@@ -9,11 +9,11 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum {
 
     protected BaseState<EState> CurrentState;
 
-    void Start() {
+    private void Start() {
         CurrentState.EnterState();
     }
 
-    void Update() {
+    private void Update() {
         CurrentState.UpdateState();
     }
     

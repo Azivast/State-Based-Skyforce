@@ -13,6 +13,7 @@ public class ScoreCounter : MonoBehaviour {
    private void OnEnable() {
       score.OnScoreChange += OnScoreChange;
       text.text = FORMAT;
+      OnScoreChange(score.Score);
    }
 
    private void OnDisable() {

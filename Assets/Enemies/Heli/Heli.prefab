@@ -53,13 +53,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlyState:
     speed: 3
+    rotationSpeed: 2
     ramDamage: 1
     target: {x: 0, y: 0}
   ShootState:
     projectile: {fileID: 4678140393062429496, guid: 51bc821ba0219b64c9c8c29306503363, type: 3}
     timeBeforeFirstShot: 1
-    numberOfShots: 3
-    timeBetweenShots: 1
+    numberOfShots: 2
+    timeBetweenShots: 3
   DieState:
     ExplosionPrefab: {fileID: 2536247575748048894, guid: 8cdcbbdb9d74bd64f8f18810a5e49d0b, type: 3}
     ScorePrefab: {fileID: 5392839809250019989, guid: 53c70c9c60bc2ae449d8d521f04c117a, type: 3}

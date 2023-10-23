@@ -11,7 +11,6 @@ public class ShipBehaviour : StateMachine<ShipBehaviour.AvailableStates>, IDamag
     [SerializeField] private  ShipMoveState moveState = new  ShipMoveState(AvailableStates.Move);
     [SerializeField] private  ShipShootState ShootState = new  ShipShootState(AvailableStates.Shoot);
     [SerializeField] private  ShipDieState DieState = new  ShipDieState(AvailableStates.Die);
-    [SerializeField] private  ShipDespawnState DespawnState = new  ShipDespawnState(AvailableStates.Despawn);
     [SerializeField] private UnityEvent OnHit;
 
     public int Health = 10;
@@ -20,7 +19,6 @@ public class ShipBehaviour : StateMachine<ShipBehaviour.AvailableStates>, IDamag
         Move,
         Shoot,
         Die,
-        Despawn,
     }
     
     public Path Path { get; set; }
@@ -32,7 +30,6 @@ public class ShipBehaviour : StateMachine<ShipBehaviour.AvailableStates>, IDamag
         States.Add(AvailableStates.Move, moveState);
         States.Add(AvailableStates.Shoot, ShootState);
         States.Add(AvailableStates.Die, DieState);
-        States.Add(AvailableStates.Despawn, DespawnState);
 
         CurrentState = States[AvailableStates.Move];
     }
@@ -40,7 +37,6 @@ public class ShipBehaviour : StateMachine<ShipBehaviour.AvailableStates>, IDamag
     private void Start() {
         moveState.SetupState(this);
         ShootState.SetupState(this);
-        DespawnState.SetupState(this);
         DieState.SetupState(this);
     }
 

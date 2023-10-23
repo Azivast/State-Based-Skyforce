@@ -924,15 +924,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7250014273856483630, guid: 756b0ce74ad79614e953c6863a21bbc8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.95490706
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7250014273856483630, guid: 756b0ce74ad79614e953c6863a21bbc8, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.95490706
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7250014273856483630, guid: 756b0ce74ad79614e953c6863a21bbc8, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.95490706
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7250014273856483630, guid: 756b0ce74ad79614e953c6863a21bbc8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1533,7 +1533,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774188297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.13, y: -5.3, z: 0}
+  m_LocalPosition: {x: 5.13, y: -5.93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2692,6 +2692,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Score Counter
       objectReference: {fileID: 0}
+    - target: {fileID: 5922510610482079644, guid: 756b0ce74ad79614e953c6863a21bbc8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7250014273856483630, guid: 756b0ce74ad79614e953c6863a21bbc8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2730,15 +2734,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7250014273856483630, guid: 756b0ce74ad79614e953c6863a21bbc8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.95490706
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7250014273856483630, guid: 756b0ce74ad79614e953c6863a21bbc8, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.95490706
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7250014273856483630, guid: 756b0ce74ad79614e953c6863a21bbc8, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.95490706
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7250014273856483630, guid: 756b0ce74ad79614e953c6863a21bbc8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3329,7 +3333,8 @@ MonoBehaviour:
   looseGUI: {fileID: 1169217262}
   playingGUI: {fileID: 1288323643}
   mainMenuSceneName: MainMenu
-  timeBeforeMainMenu: 7
+  timeBeforeMainMenuWin: 7
+  timeBeforeMainMenuLoose: 7
   playerHealth: {fileID: 11400000, guid: 1a9a0a7363a05dc408b4d2ef0d771895, type: 2}
   waveManager: {fileID: 1163096485}
 --- !u!4 &1709558363
@@ -3460,7 +3465,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1739314967}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.13, y: -5.3, z: 0}
+  m_LocalPosition: {x: -5.13, y: -5.96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
