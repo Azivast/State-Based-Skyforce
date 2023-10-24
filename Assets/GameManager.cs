@@ -48,4 +48,10 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSecondsRealtime(seconds);
         SceneManager.LoadScene(mainMenuSceneName);
     }
+
+    private void Update() {
+        if (Input.GetKey(KeyCode.Escape)) {
+            SceneManager.LoadScene(mainMenuSceneName);
+        }
+    }
 }
